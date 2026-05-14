@@ -1,0 +1,20 @@
+# IDE / editor
+.idea/
+*.iml
+.vscode/
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# Graphify outputs
+graphify-out/
+
+# Project planning (not source)
+Data Structures-workload/
+
+# Java build artifacts
+*.class
+out/
+build/
+target/
