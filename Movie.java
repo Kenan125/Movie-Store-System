@@ -8,6 +8,7 @@ public class Movie {
 	private String genre;
 	private double price;
 	private int stock;
+	private int rentedCount = 0;
 
 	public Movie(int movieId, String title, String genre, double price, int stock) {
 		this.movieId = movieId;
@@ -38,8 +39,12 @@ public class Movie {
 		return stock;
 	}
 
-	
-	
+	int getRentedCount() {
+		return rentedCount;
+	}
+
+
+
 	void setTitle(String title) {
 		this.title = title;
 	}
@@ -56,9 +61,13 @@ public class Movie {
 		this.stock = stock;
 	}
 
-	
+	void setRentedCount(int rentedCount) {
+		this.rentedCount = rentedCount;
+	}
+
+
 	public String toString() {
 		return "ID: " + movieId + " | Title: " + title + " | Genre: " + genre + " | Price: $" + price + " | Stock: "
-				+ stock;
+				+ stock + " | Rented: " + rentedCount;
 	}
 }

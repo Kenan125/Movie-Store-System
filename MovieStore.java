@@ -8,10 +8,16 @@ public class MovieStore {
         bst = new MovieBST();
     }
 
-    // Add a movie to both Linked List and BST
-    public void addMovie(Movie movie) {
+    // Add a movie to both Linked List and BST. Rejects duplicate IDs so the
+    // two structures stay in sync.
+    public boolean addMovie(Movie movie) {
+        if (bst.search(movie.getMovieId()) != null) {
+            System.out.println("A movie with ID " + movie.getMovieId() + " already exists.");
+            return false;
+        }
         linkedList.addMovie(movie);
         bst.insert(movie);
+        return true;
     }
 
     // Delete a movie from both Linked List and BST
@@ -36,7 +42,8 @@ public class MovieStore {
         }
     }
 
-    // Rent a movie — decrease stock by 1
+    // Rent a movie — moves one copy from stock into the rented pool so it can
+    // be returned later. Differs from purchase, which removes stock permanently.
     public void rentMovie(int movieId) {
         Movie movie = bst.search(movieId);
         if (movie == null) {
@@ -48,7 +55,26 @@ public class MovieStore {
             return;
         }
         movie.setStock(movie.getStock() - 1);
-        System.out.println("You have rented \"" + movie.getTitle() + "\". Remaining stock: " + movie.getStock());
+        movie.setRentedCount(movie.getRentedCount() + 1);
+        System.out.println("You have rented \"" + movie.getTitle() + "\". Remaining stock: "
+                + movie.getStock() + ". Currently rented: " + movie.getRentedCount());
+    }
+
+    // Return a rented copy — moves one copy from the rented pool back into stock.
+    public void returnMovie(int movieId) {
+        Movie movie = bst.search(movieId);
+        if (movie == null) {
+            System.out.println("Movie with ID " + movieId + " not found.");
+            return;
+        }
+        if (movie.getRentedCount() <= 0) {
+            System.out.println("No copies of \"" + movie.getTitle() + "\" are currently rented.");
+            return;
+        }
+        movie.setStock(movie.getStock() + 1);
+        movie.setRentedCount(movie.getRentedCount() - 1);
+        System.out.println("\"" + movie.getTitle() + "\" returned. New stock: "
+                + movie.getStock() + ". Still rented: " + movie.getRentedCount());
     }
 
     // Purchase a movie — decrease stock by 1
