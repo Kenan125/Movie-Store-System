@@ -1,7 +1,7 @@
-public class LinkedList {
+public class MovieLinkedList {
 	private Node head;
 
-	public LinkedList() {
+	public MovieLinkedList() {
 		head = null;
 	}
 
